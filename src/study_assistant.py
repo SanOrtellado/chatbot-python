@@ -1,6 +1,10 @@
 import re
 import unicodedata
 from collections import Counter
+from functools import lru_cache
+from pathlib import Path
+
+from pypdf import PdfReader
 
 
 CONTENT_INDEX = [
@@ -15,6 +19,39 @@ CONTENT_INDEX = [
     "Estructuras repetitivas: for, while y repetir",
     "Vectores y matrices",
 ]
+
+
+STOPWORDS = {
+    "a",
+    "al",
+    "algo",
+    "como",
+    "con",
+    "de",
+    "del",
+    "dame",
+    "el",
+    "en",
+    "es",
+    "esta",
+    "este",
+    "genera",
+    "hacer",
+    "la",
+    "las",
+    "le",
+    "lo",
+    "los",
+    "me",
+    "para",
+    "por",
+    "que",
+    "quiero",
+    "se",
+    "un",
+    "una",
+    "y",
+}
 
 
 SPECIFIC_EXERCISES = [
@@ -304,7 +341,58 @@ def normalize_text(text):
     return "".join(char for char in text if unicodedata.category(char) != "Mn")
 
 
-def find_topic(question):
+def extract_query_terms(question):
+    normalized_question = normalize_text(question)
+    terms = re.findall(r"[a-z0-9_]+", normalized_question)
+    return [term for term in terms if len(term) > 2 and term not in STOPWORDS]
+
+
+@lru_cache(maxsize=2)
+def load_learning_material(pdf_path):
+    path = Path(pdf_path) if pdf_path else None
+    if not path or not path.exists():
+        return []
+
+    reader = PdfReader(str(path))
+    chunks = []
+
+    for page in reader.pages:
+        text = normalize_text(page.extract_text() or "")
+        paragraphs = [paragraph.strip() for paragraph in re.split(r"\n{2,}|\r\n{2,}", text) if paragraph.strip()]
+        chunks.extend(paragraphs)
+
+    return chunks
+
+
+def search_learning_material(question, pdf_path, limit=5):
+    terms = extract_query_terms(question)
+    if not terms:
+        return []
+
+    matches = []
+    for chunk in load_learning_material(str(pdf_path)):
+        score = sum(chunk.count(term) for term in terms)
+        if score:
+            matches.append((score, chunk))
+
+    matches.sort(key=lambda item: item[0], reverse=True)
+    return [chunk for _, chunk in matches[:limit]]
+
+
+def score_topics_from_text(text):
+    scores = Counter()
+    normalized_text = normalize_text(text)
+
+    for topic, config in TOPICS.items():
+        for keyword in config["keywords"]:
+            normalized_keyword = normalize_text(keyword)
+            if normalized_keyword in normalized_text:
+                scores[topic] += 1
+
+    return scores
+
+
+def find_topic(question, pdf_path=None):
     normalized_question = normalize_text(question)
     topic_scores = Counter()
 
@@ -312,9 +400,15 @@ def find_topic(question):
         for keyword in config["keywords"]:
             normalized_keyword = normalize_text(keyword)
             if normalized_keyword in normalized_question:
-                topic_scores[topic] += 3
+                topic_scores[topic] += 2 + (len(normalized_keyword.split()) * 2)
             elif re.search(rf"\b{re.escape(normalized_keyword)}\b", normalized_question):
                 topic_scores[topic] += 1
+
+    if pdf_path:
+        material_matches = search_learning_material(question, pdf_path)
+        material_text = " ".join(material_matches)
+        for topic, score in score_topics_from_text(material_text).items():
+            topic_scores[topic] += score
 
     return topic_scores.most_common(1)[0][0] if topic_scores else "algoritmos"
 
@@ -374,7 +468,7 @@ def build_study_response(question, pdf_path=None):
     if specific_exercise:
         return build_specific_exercise_response(specific_exercise)
 
-    topic = find_topic(question)
+    topic = find_topic(question, pdf_path)
     config = TOPICS[topic]
     lead = "Claro. Un ejemplo simple seria:" if wants_code(question) else "Te lo explico de forma simple:"
 
