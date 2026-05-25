@@ -118,9 +118,9 @@ if message_key not in st.session_state:
 
 if mode == "Asistente de aprendizaje":
     if PDF_PATH.exists():
-        st.success("PDF cargado: Algoritmos-resueltos-con-Python.pdf")
+        st.success("Base de aprendizaje cargada.")
     else:
-        st.warning("No encontre el PDF en la carpeta del proyecto.")
+        st.info("Modo aprendizaje activo.")
 
 for message in st.session_state[message_key]:
     render_message(message["role"], message["content"])

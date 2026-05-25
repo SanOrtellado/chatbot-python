@@ -108,7 +108,7 @@ La interfaz puede abrir en modo demo aunque TensorFlow no este instalado. Para u
 
 ## Asistente de aprendizaje
 
-Si el archivo `Algoritmos-resueltos-con-Python.pdf` esta en la carpeta del proyecto, la app permite cambiar al modo `Asistente de aprendizaje`.
+La app permite cambiar al modo `Asistente de aprendizaje`.
 
 En ese modo podes preguntar por temas como:
 
@@ -117,7 +117,7 @@ En ese modo podes preguntar por temas como:
 - Que son las funciones?
 - Como funcionan los condicionales?
 
-La app usa el PDF como material de consulta local y devuelve una explicacion breve, paginas sugeridas y un ejercicio practico.
+La app devuelve una explicacion breve, un ejemplo con codigo Python y un ejercicio practico.
 
 ## Como funciona
 
