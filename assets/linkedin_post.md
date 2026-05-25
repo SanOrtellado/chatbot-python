@@ -10,6 +10,7 @@ Que incluye:
 - Limpieza y preparacion de texto con NLTK.
 - Modelo de clasificacion entrenado con Keras/TensorFlow.
 - Interfaz conversacional por consola.
+- Interfaz web con Streamlit para probar el bot visualmente.
 - README con pasos para ejecutar el proyecto.
 
 Aprendizajes principales:
@@ -20,7 +21,7 @@ Aprendizajes principales:
 
 Este proyecto me ayudo a practicar Python, NLP, redes neuronales simples y organizacion de proyectos para GitHub.
 
-Stack: Python, NLTK, TensorFlow/Keras, NumPy.
+Stack: Python, NLTK, TensorFlow/Keras, NumPy, Streamlit.
 
 Repositorio: [agregar link de GitHub]
 
