@@ -64,6 +64,14 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+Este archivo instala las dependencias necesarias para abrir la interfaz web en modo demo.
+
+Si queres usar la red neuronal entrenada con TensorFlow, instala tambien las dependencias de machine learning usando Python 3.10, 3.11 o 3.12:
+
+```bash
+pip install -r requirements-ml.txt
+```
+
 4. Entrenar el modelo:
 
 ```bash
@@ -84,7 +92,7 @@ Para salir de la conversacion, escribi `salir`, `chau` o `adios`.
 streamlit run app.py
 ```
 
-La interfaz puede abrir en modo demo aunque TensorFlow no este instalado. Para usar el modelo de red neuronal, usa Python 3.10, 3.11 o 3.12, instala las dependencias y ejecuta `python src/train.py`.
+La interfaz puede abrir en modo demo aunque TensorFlow no este instalado. Para usar el modelo de red neuronal, usa Python 3.10, 3.11 o 3.12, instala `requirements-ml.txt` y ejecuta `python src/train.py`.
 
 ## Como funciona
 
