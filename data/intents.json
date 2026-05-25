@@ -1,0 +1,122 @@
+{
+  "intents": [
+    {
+      "tag": "saludo",
+      "patterns": [
+        "hola",
+        "buen dia",
+        "buenas tardes",
+        "buenas noches",
+        "hey",
+        "que tal",
+        "como estas"
+      ],
+      "responses": [
+        "Hola, encantado de ayudarte.",
+        "Buenas, en que puedo ayudarte?",
+        "Hola, estoy listo para conversar."
+      ]
+    },
+    {
+      "tag": "despedida",
+      "patterns": [
+        "chau",
+        "adios",
+        "hasta luego",
+        "nos vemos",
+        "salir",
+        "terminar"
+      ],
+      "responses": [
+        "Hasta luego.",
+        "Gracias por conversar conmigo.",
+        "Nos vemos, que tengas un gran dia."
+      ]
+    },
+    {
+      "tag": "agradecimiento",
+      "patterns": [
+        "gracias",
+        "muchas gracias",
+        "te agradezco",
+        "muy amable",
+        "perfecto gracias"
+      ],
+      "responses": [
+        "De nada.",
+        "Con gusto.",
+        "Me alegra haber ayudado."
+      ]
+    },
+    {
+      "tag": "nombre",
+      "patterns": [
+        "como te llamas",
+        "cual es tu nombre",
+        "quien eres",
+        "sos un chatbot",
+        "que eres"
+      ],
+      "responses": [
+        "Soy un chatbot creado con Python, NLTK y Keras.",
+        "Soy un asistente conversacional entrenado con un dataset de intenciones."
+      ]
+    },
+    {
+      "tag": "python",
+      "patterns": [
+        "que es python",
+        "para que sirve python",
+        "por que aprender python",
+        "python es dificil",
+        "quiero aprender python"
+      ],
+      "responses": [
+        "Python es un lenguaje muy usado en datos, automatizacion, web e inteligencia artificial.",
+        "Python es una buena opcion para empezar porque tiene una sintaxis clara y muchas bibliotecas."
+      ]
+    },
+    {
+      "tag": "ia",
+      "patterns": [
+        "que es inteligencia artificial",
+        "que es ia",
+        "como funciona la ia",
+        "que es machine learning",
+        "que es aprendizaje automatico"
+      ],
+      "responses": [
+        "La inteligencia artificial busca que las maquinas realicen tareas que normalmente requieren inteligencia humana.",
+        "Machine learning es una rama de la IA donde los modelos aprenden patrones a partir de datos."
+      ]
+    },
+    {
+      "tag": "proyecto",
+      "patterns": [
+        "que hace este proyecto",
+        "como funciona este chatbot",
+        "que aprendiste",
+        "explicame el proyecto",
+        "para que sirve este chatbot"
+      ],
+      "responses": [
+        "Este proyecto clasifica mensajes en intenciones y responde segun la categoria detectada.",
+        "El chatbot usa NLP para preparar texto y una red neuronal para predecir la intencion del usuario."
+      ]
+    },
+    {
+      "tag": "portfolio",
+      "patterns": [
+        "como puedo mostrar esto en mi portfolio",
+        "sirve para github",
+        "como lo publico",
+        "esto sirve para linkedin",
+        "como presento este proyecto"
+      ],
+      "responses": [
+        "Podes publicarlo en GitHub con un README claro, capturas y una explicacion de lo que aprendiste.",
+        "Para LinkedIn, conta el objetivo, el stack usado y los aprendizajes principales del proyecto."
+      ]
+    }
+  ]
+}
