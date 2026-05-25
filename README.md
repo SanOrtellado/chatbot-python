@@ -116,6 +116,7 @@ En ese modo podes preguntar por temas como:
 - Dame un ejercicio sobre bucles.
 - Que son las funciones?
 - Como funcionan los condicionales?
+- Mostrame el temario completo.
 
 La app devuelve una explicacion breve, un ejemplo con codigo Python y un ejercicio practico.
 
