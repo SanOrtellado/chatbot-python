@@ -84,6 +84,8 @@ Para salir de la conversacion, escribi `salir`, `chau` o `adios`.
 streamlit run app.py
 ```
 
+La interfaz puede abrir en modo demo aunque TensorFlow no este instalado. Para usar el modelo de red neuronal, usa Python 3.10, 3.11 o 3.12, instala las dependencias y ejecuta `python src/train.py`.
+
 ## Como funciona
 
 El archivo `data/intents.json` contiene categorias de mensajes llamadas intenciones. Cada intencion tiene ejemplos de frases del usuario y posibles respuestas.
