@@ -21,6 +21,60 @@ CONTENT_INDEX = [
 ]
 
 
+PRACTICE_VARIANTS = {
+    "python": [
+        "Escribe un programa que muestre tu nombre, tu ciudad y una frase sobre lo que queres aprender.",
+        "Crea un programa que imprima tres datos sobre vos en lineas separadas.",
+        "Arma una presentacion en consola que combine texto fijo y variables.",
+    ],
+    "operaciones_aritmeticas": [
+        "Calcula el subtotal, IVA y total de una compra usando operadores aritmeticos.",
+        "Crea un programa que calcule el precio final despues de aplicar un descuento.",
+        "Pide precio y cantidad por teclado, calcula subtotal, descuento, IVA y total final.",
+    ],
+    "operaciones_relacionales": [
+        "Compara dos precios e indica cual es mayor.",
+        "Compara dos edades y muestra si son iguales o diferentes.",
+        "Crea un programa que compare tres ventas y determine si la primera supera a las otras dos.",
+    ],
+    "operaciones_logicas": [
+        "Crea una condicion que valide si un usuario puede comprar: mayor de edad y saldo suficiente.",
+        "Valida si una persona puede acceder a un beneficio usando dos condiciones combinadas.",
+        "Crea un login simple que valide usuario correcto, clave correcta y cuenta activa.",
+    ],
+    "variables": [
+        "Crea una variable con tu nombre, otra con tu edad y muestra ambas con `print`.",
+        "Guarda producto, precio y cantidad en variables, luego muestra una frase con esos datos.",
+        "Crea variables para una venta y calcula el total usando precio, cantidad y descuento.",
+    ],
+    "estructuras_repetitivas": [
+        "Muestra los numeros del 1 al 10 y calcula su suma.",
+        "Recorre una lista de ventas y muestra cada valor.",
+        "Pide numeros hasta que el usuario escriba 0 y muestra la suma acumulada.",
+    ],
+    "for": [
+        "Usa `for` para recorrer una lista de productos y mostrar cada uno.",
+        "Usa `for` y `range` para mostrar la tabla del 5.",
+        "Recorre una lista de ventas, calcula el total y cuenta cuantas superan 1000.",
+    ],
+    "while": [
+        "Usa `while` para pedir una clave hasta que el usuario escriba la correcta.",
+        "Usa `while` para contar del 1 al 10.",
+        "Crea un menu que se repita hasta que el usuario elija la opcion salir.",
+    ],
+    "vectores": [
+        "Crea un vector con ventas semanales y calcula el total y el promedio.",
+        "Guarda cinco notas en una lista y muestra la nota mas alta.",
+        "Recorre un vector de ventas y separa las ventas altas de las bajas.",
+    ],
+    "matrices": [
+        "Crea una matriz de 2 filas por 3 columnas y muestra todos sus elementos con bucles anidados.",
+        "Crea una matriz con ventas por sucursal y mes, luego muestra la primera fila.",
+        "Calcula el total por fila de una matriz de ventas.",
+    ],
+}
+
+
 STOPWORDS = {
     "a",
     "al",
@@ -425,6 +479,32 @@ def wants_code(question):
     return any(word in normalized_question for word in code_words)
 
 
+def wants_harder_practice(question):
+    normalized_question = normalize_text(question)
+    triggers = ["dificil", "avanzado", "desafio", "mas complejo", "nivel mas"]
+    return any(trigger in normalized_question for trigger in triggers)
+
+
+def wants_another_practice(question):
+    normalized_question = normalize_text(question)
+    triggers = ["otro", "otra", "distinto", "diferente", "nuevo", "nueva"]
+    return any(trigger in normalized_question for trigger in triggers)
+
+
+def get_practice(topic, question):
+    practices = PRACTICE_VARIANTS.get(topic)
+    if not practices:
+        return TOPICS[topic]["exercise"]
+
+    if wants_harder_practice(question):
+        return practices[-1]
+
+    if wants_another_practice(question):
+        return practices[1] if len(practices) > 1 else practices[0]
+
+    return practices[0]
+
+
 def find_specific_exercise(question):
     normalized_question = normalize_text(question)
 
@@ -471,6 +551,7 @@ def build_study_response(question, pdf_path=None):
     topic = find_topic(question, pdf_path)
     config = TOPICS[topic]
     lead = "Claro. Un ejemplo simple seria:" if wants_code(question) else "Te lo explico de forma simple:"
+    practice = get_practice(topic, question)
 
     return (
         f"**Tema: {topic.replace('_', ' ')}**\n\n"
@@ -479,6 +560,6 @@ def build_study_response(question, pdf_path=None):
         "```python\n"
         f"{config['code']}\n"
         "```\n\n"
-        f"**Practica sugerida:** {config['exercise']}\n\n"
+        f"**Practica sugerida:** {practice}\n\n"
         "Podes pedirme otro ejemplo, un ejercicio mas dificil o el temario completo."
     )
