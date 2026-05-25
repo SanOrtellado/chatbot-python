@@ -17,6 +17,68 @@ CONTENT_INDEX = [
 ]
 
 
+SPECIFIC_EXERCISES = [
+    {
+        "keywords": ["area", "rectangulo"],
+        "title": "area de un rectangulo",
+        "summary": "Para calcular el area de un rectangulo se multiplica la base por la altura.",
+        "pseudocode": """Inicio
+    Leer base
+    Leer altura
+    area = base * altura
+    Escribir area
+Fin""",
+        "code": """base = float(input("Base del rectangulo: "))
+altura = float(input("Altura del rectangulo: "))
+
+area = base * altura
+
+print(f"El area del rectangulo es: {area}")""",
+        "exercise": "Modifica el programa para calcular tambien el perimetro del rectangulo.",
+    },
+    {
+        "keywords": ["promedio", "notas"],
+        "title": "promedio de notas",
+        "summary": "Para calcular un promedio se suman los valores y se dividen por la cantidad de datos.",
+        "pseudocode": """Inicio
+    Leer nota_1
+    Leer nota_2
+    Leer nota_3
+    promedio = (nota_1 + nota_2 + nota_3) / 3
+    Escribir promedio
+Fin""",
+        "code": """nota_1 = float(input("Primera nota: "))
+nota_2 = float(input("Segunda nota: "))
+nota_3 = float(input("Tercera nota: "))
+
+promedio = (nota_1 + nota_2 + nota_3) / 3
+
+print(f"El promedio es: {promedio}")""",
+        "exercise": "Agrega una condicion para mostrar si el promedio es aprobado o desaprobado.",
+    },
+    {
+        "keywords": ["mayor", "menor", "edad"],
+        "title": "validar mayoria de edad",
+        "summary": "Este algoritmo usa una estructura selectiva para decidir segun la edad ingresada.",
+        "pseudocode": """Inicio
+    Leer edad
+    Si edad >= 18 Entonces
+        Escribir "Es mayor de edad"
+    SiNo
+        Escribir "Es menor de edad"
+    FinSi
+Fin""",
+        "code": """edad = int(input("Edad: "))
+
+if edad >= 18:
+    print("Es mayor de edad")
+else:
+    print("Es menor de edad")""",
+        "exercise": "Agrega una segunda condicion para indicar si la persona tambien puede votar.",
+    },
+]
+
+
 TOPICS = {
     "python": {
         "keywords": ["python", "lenguaje", "programacion", "caracteristicas", "por que python"],
@@ -269,6 +331,32 @@ def wants_code(question):
     return any(word in normalized_question for word in code_words)
 
 
+def find_specific_exercise(question):
+    normalized_question = normalize_text(question)
+
+    for exercise in SPECIFIC_EXERCISES:
+        if all(keyword in normalized_question for keyword in exercise["keywords"]):
+            return exercise
+
+    return None
+
+
+def build_specific_exercise_response(exercise):
+    return (
+        f"**Ejercicio: {exercise['title']}**\n\n"
+        f"{exercise['summary']}\n\n"
+        "**Pseudocodigo**\n\n"
+        "```text\n"
+        f"{exercise['pseudocode']}\n"
+        "```\n\n"
+        "**Implementacion en Python**\n\n"
+        "```python\n"
+        f"{exercise['code']}\n"
+        "```\n\n"
+        f"**Desafio extra:** {exercise['exercise']}"
+    )
+
+
 def build_index_response():
     items = "\n".join(f"- {item}" for item in CONTENT_INDEX)
     return (
@@ -281,6 +369,10 @@ def build_index_response():
 def build_study_response(question, pdf_path=None):
     if asks_for_index(question):
         return build_index_response()
+
+    specific_exercise = find_specific_exercise(question)
+    if specific_exercise:
+        return build_specific_exercise_response(specific_exercise)
 
     topic = find_topic(question)
     config = TOPICS[topic]
