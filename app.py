@@ -11,6 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent
 SRC_DIR = BASE_DIR / "src"
 DATA_PATH = BASE_DIR / "data" / "intents.json"
 MODEL_PATH = BASE_DIR / "model" / "chatbot_model.keras"
+PDF_PATH = BASE_DIR / "Algoritmos-resueltos-con-Python.pdf"
 sys.path.append(str(SRC_DIR))
 
 
@@ -54,11 +55,16 @@ def demo_response(message, intents):
 
 def render_message(role, text):
     with st.chat_message(role):
-        st.write(text)
+        st.markdown(text)
 
 
 st.title("Chatbot con Python")
 st.caption("Demo interactiva con dataset de intenciones, NLTK y TensorFlow/Keras.")
+
+mode = st.sidebar.radio(
+    "Modo",
+    ["Chatbot general", "Asistente de aprendizaje"],
+)
 
 ml_ready = MODEL_PATH.exists()
 resources = None
@@ -74,29 +80,46 @@ if ml_ready and resources:
 else:
     st.info("Modo demo activo. Para usar la red neuronal, instala TensorFlow con Python 3.10, 3.11 o 3.12 y entrena el modelo.")
 
-if "messages" not in st.session_state:
-    st.session_state.messages = [
+message_key = "study_messages" if mode == "Asistente de aprendizaje" else "chat_messages"
+
+if message_key not in st.session_state:
+    intro = (
+        "Hola, soy tu asistente de aprendizaje. Preguntame por temas como bucles, listas, funciones o condicionales."
+        if mode == "Asistente de aprendizaje"
+        else "Hola, soy tu chatbot. Preguntame sobre Python, IA o este proyecto."
+    )
+    st.session_state[message_key] = [
         {
             "role": "assistant",
-            "content": "Hola, soy tu chatbot. Preguntame sobre Python, IA o este proyecto.",
+            "content": intro,
         }
     ]
 
-for message in st.session_state.messages:
+if mode == "Asistente de aprendizaje":
+    if PDF_PATH.exists():
+        st.success("PDF cargado: Algoritmos-resueltos-con-Python.pdf")
+    else:
+        st.warning("No encontre el PDF en la carpeta del proyecto.")
+
+for message in st.session_state[message_key]:
     render_message(message["role"], message["content"])
 
 prompt = st.chat_input("Escribi tu mensaje...")
 
 if prompt:
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state[message_key].append({"role": "user", "content": prompt})
     render_message("user", prompt)
 
-    if ml_ready and resources:
+    if mode == "Asistente de aprendizaje":
+        from study_assistant import build_study_response
+
+        response = build_study_response(prompt, PDF_PATH)
+    elif ml_ready and resources:
         intents, words, classes, model, get_response, predict_class = resources
         predicted = predict_class(prompt, model, words, classes)
         response = get_response(predicted, intents)
     else:
         response = demo_response(prompt, load_demo_intents())
 
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state[message_key].append({"role": "assistant", "content": response})
     render_message("assistant", response)

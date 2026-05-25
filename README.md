@@ -12,6 +12,7 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - Guarda el modelo entrenado y los archivos auxiliares.
 - Permite conversar con el bot desde la terminal.
 - Incluye una interfaz web con Streamlit para mostrar la interaccion del usuario.
+- Puede funcionar como asistente de aprendizaje por temas si agregas un PDF de estudio en la carpeta del proyecto.
 
 ## Stack
 
@@ -20,6 +21,7 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - TensorFlow / Keras
 - NumPy
 - Streamlit
+- pypdf
 
 ## Version recomendada de Python
 
@@ -30,6 +32,7 @@ Se recomienda usar Python 3.10, 3.11 o 3.12 para evitar problemas de compatibili
 ```text
 chatbot-python/
 |-- app.py
+|-- Algoritmos-resueltos-con-Python.pdf
 |-- assets/
 |   `-- linkedin_post.md
 |-- data/
@@ -93,6 +96,19 @@ streamlit run app.py
 ```
 
 La interfaz puede abrir en modo demo aunque TensorFlow no este instalado. Para usar el modelo de red neuronal, usa Python 3.10, 3.11 o 3.12, instala `requirements-ml.txt` y ejecuta `python src/train.py`.
+
+## Asistente de aprendizaje
+
+Si el archivo `Algoritmos-resueltos-con-Python.pdf` esta en la carpeta del proyecto, la app permite cambiar al modo `Asistente de aprendizaje`.
+
+En ese modo podes preguntar por temas como:
+
+- Explicame listas en Python.
+- Dame un ejercicio sobre bucles.
+- Que son las funciones?
+- Como funcionan los condicionales?
+
+La app usa el PDF como material de consulta local y devuelve una explicacion breve, paginas sugeridas y un ejercicio practico.
 
 ## Como funciona
 
