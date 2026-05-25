@@ -1,6 +1,6 @@
-# Chatbot con Python, NLTK y Keras
+# Aprendizaje de algoritmos de Python by San-Data
 
-Proyecto de chatbot educativo que usa procesamiento de lenguaje natural y una red neuronal simple para clasificar mensajes de usuario en intenciones y responder con frases relevantes.
+Proyecto educativo creado por Sandra Ortellado, tambien conocida como San-Data. La app funciona como chatbot y asistente de aprendizaje para practicar temas de algoritmos y Python.
 
 El objetivo es aprender el flujo basico de un chatbot basado en machine learning: preparar texto, convertirlo en datos numericos, entrenar un modelo y usarlo en una conversacion por consola o desde una interfaz web.
 
@@ -13,6 +13,15 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - Permite conversar con el bot desde la terminal.
 - Incluye una interfaz web con Streamlit para mostrar la interaccion del usuario.
 - Puede funcionar como asistente de aprendizaje por temas si agregas un PDF de estudio en la carpeta del proyecto.
+- Incluye marca personal, links de portfolio y datos de la creadora.
+
+## Autora
+
+Sandra Ortellado es Analista de Datos, Lic. en Data Science en formacion y especialista en Growth Marketing & Research. Trabaja con Python, SQL, Power BI y proyectos de automatizacion e IA aplicada.
+
+- Portfolio: https://san-data.vercel.app/portfolio.html
+- LinkedIn: https://ar.linkedin.com/in/sandra-ortellado
+- GitHub: https://github.com/SanOrtellado
 
 ## Stack
 

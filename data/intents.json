@@ -117,6 +117,24 @@
         "Podes publicarlo en GitHub con un README claro, capturas y una explicacion de lo que aprendiste.",
         "Para LinkedIn, conta el objetivo, el stack usado y los aprendizajes principales del proyecto."
       ]
+    },
+    {
+      "tag": "autora",
+      "patterns": [
+        "quien creo este chatbot",
+        "quien hizo este proyecto",
+        "quien es sandra",
+        "quien es san data",
+        "que es san-data",
+        "hablame de sandra ortellado",
+        "datos de la creadora",
+        "quien desarrollo esta app"
+      ],
+      "responses": [
+        "Este proyecto fue creado por Sandra Ortellado, tambien conocida como San-Data. Sandra es Analista de Datos, Lic. en Data Science en formacion y trabaja con Python, SQL, Power BI y marketing analytics.",
+        "La creadora es Sandra Ortellado, Analista de Datos y Growth Marketing & Research. Su portfolio esta en https://san-data.vercel.app/portfolio.html",
+        "San-Data es la marca personal de Sandra Ortellado, enfocada en datos, Python, dashboards, automatizacion e inteligencia artificial aplicada."
+      ]
     }
   ]
 }

@@ -12,10 +12,18 @@ SRC_DIR = BASE_DIR / "src"
 DATA_PATH = BASE_DIR / "data" / "intents.json"
 MODEL_PATH = BASE_DIR / "model" / "chatbot_model.keras"
 PDF_PATH = BASE_DIR / "Algoritmos-resueltos-con-Python.pdf"
+AUTHOR_IMAGE_URL = "https://san-data.vercel.app/mailoyyo.jpeg"
+PORTFOLIO_URL = "https://san-data.vercel.app/portfolio.html"
+LINKEDIN_URL = "https://ar.linkedin.com/in/sandra-ortellado"
+GITHUB_URL = "https://github.com/SanOrtellado"
 sys.path.append(str(SRC_DIR))
 
 
-st.set_page_config(page_title="Chatbot con Python", page_icon=":speech_balloon:", layout="centered")
+st.set_page_config(
+    page_title="Aprendizaje de algoritmos de Python | San-Data",
+    page_icon=":speech_balloon:",
+    layout="centered",
+)
 
 
 @st.cache_resource
@@ -58,8 +66,21 @@ def render_message(role, text):
         st.markdown(text)
 
 
-st.title("Chatbot con Python")
-st.caption("Demo interactiva con dataset de intenciones, NLTK y TensorFlow/Keras.")
+st.title("Aprendizaje de algoritmos de Python")
+st.caption("by San-Data | Proyecto creado por Sandra Ortellado")
+
+with st.sidebar:
+    st.image(AUTHOR_IMAGE_URL, caption="Sandra Ortellado | San-Data")
+    st.markdown("### Creado por Sandra Ortellado")
+    st.markdown(
+        "Analista de Datos, Lic. en Data Science en formacion y especialista en "
+        "Growth Marketing & Research."
+    )
+    st.markdown("Transformo datos en decisiones inteligentes con Python, SQL y Power BI.")
+    st.markdown(
+        f"[Portfolio]({PORTFOLIO_URL}) | [LinkedIn]({LINKEDIN_URL}) | [GitHub]({GITHUB_URL})"
+    )
+    st.divider()
 
 mode = st.sidebar.radio(
     "Modo",
@@ -86,7 +107,7 @@ if message_key not in st.session_state:
     intro = (
         "Hola, soy tu asistente de aprendizaje. Preguntame por temas como bucles, listas, funciones o condicionales."
         if mode == "Asistente de aprendizaje"
-        else "Hola, soy tu chatbot. Preguntame sobre Python, IA o este proyecto."
+        else "Hola, soy el chatbot de San-Data. Preguntame sobre Python, IA, este proyecto o Sandra Ortellado."
     )
     st.session_state[message_key] = [
         {
