@@ -179,7 +179,7 @@ if mode == "Asistente de aprendizaje":
     st.info("Modo aprendizaje activo: pregunta por temas, codigo, ejercicios o temario completo.")
 
 if mode == "Ruta de aprendizaje":
-    from learning_path import get_lesson, total_lessons, validate_answer
+    from learning_path import get_glossary_terms, get_lesson, total_lessons, validate_answer
 
     if "path_index" not in st.session_state:
         st.session_state.path_index = 0
@@ -200,6 +200,11 @@ if mode == "Ruta de aprendizaje":
     st.markdown(f"### {st.session_state.path_index + 1:02d}. {lesson['title']}")
     st.write(lesson["goal"])
     st.info(lesson["lesson"])
+
+    with st.expander("Glosario de apoyo"):
+        for term in get_glossary_terms(st.session_state.path_index):
+            st.markdown(f"**{term['term']}**: {term['definition']}")
+            st.code(term["example"], language="python")
 
     st.markdown("#### script.py")
     answer_key = f"path_answer_{st.session_state.path_index}"

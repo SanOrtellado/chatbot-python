@@ -77,12 +77,112 @@ LESSONS = [
 ]
 
 
+GLOSSARY_TERMS = [
+    {
+        "term": "Algoritmo",
+        "definition": "Conjunto ordenado de pasos que permite resolver un problema.",
+        "example": "Calcular un promedio: leer notas, sumarlas, dividir por la cantidad y mostrar el resultado.",
+    },
+    {
+        "term": "Variable",
+        "definition": "Espacio con nombre donde se guarda un dato que puede cambiar durante la ejecucion.",
+        "example": 'nombre = "Sandra"',
+    },
+    {
+        "term": "Constante",
+        "definition": "Valor que se considera fijo dentro del programa.",
+        "example": "IVA = 0.21",
+    },
+    {
+        "term": "Dato",
+        "definition": "Valor o informacion que usa un programa para procesar una tarea.",
+        "example": "Una edad, un precio, una ciudad o una respuesta del usuario.",
+    },
+    {
+        "term": "Bucle",
+        "definition": "Grupo de instrucciones que se repiten mientras se cumpla una condicion o durante una cantidad de veces.",
+        "example": "for numero in range(1, 6):",
+    },
+    {
+        "term": "Estructura selectiva",
+        "definition": "Bloque que permite tomar decisiones logicas dentro de un programa.",
+        "example": "if edad >= 18:",
+    },
+    {
+        "term": "Estructura repetitiva",
+        "definition": "Bloque que permite ejecutar instrucciones varias veces.",
+        "example": "while contador <= 5:",
+    },
+    {
+        "term": "Pseudocodigo",
+        "definition": "Forma de escribir la logica de un algoritmo con lenguaje simple antes de programarlo.",
+        "example": "Leer precio, calcular total, escribir total.",
+    },
+    {
+        "term": "Diagrama de flujo",
+        "definition": "Representacion visual de un algoritmo usando simbolos y flechas.",
+        "example": "Inicio -> Leer edad -> Decision -> Mostrar resultado.",
+    },
+    {
+        "term": "Identificador",
+        "definition": "Nombre que se usa para reconocer variables, funciones u otros elementos del programa.",
+        "example": "total_ventas",
+    },
+    {
+        "term": "Funcion",
+        "definition": "Bloque reutilizable de codigo que puede recibir datos y devolver un resultado.",
+        "example": "def saludar(nombre):",
+    },
+    {
+        "term": "Vector",
+        "definition": "Estructura que almacena varios valores en una sola dimension.",
+        "example": "ventas = [1200, 1500, 1800]",
+    },
+    {
+        "term": "Matriz",
+        "definition": "Estructura que organiza datos en filas y columnas.",
+        "example": "matriz = [[1, 2], [3, 4]]",
+    },
+    {
+        "term": "Python",
+        "definition": "Lenguaje de programacion interpretado, claro y usado en datos, automatizacion, web e IA.",
+        "example": 'print("Hola Python")',
+    },
+    {
+        "term": "Programa",
+        "definition": "Conjunto de instrucciones escritas en un lenguaje de programacion para realizar una tarea.",
+        "example": "Un archivo app.py con variables, condiciones y salidas.",
+    },
+    {
+        "term": "VS Code",
+        "definition": "Editor de codigo usado para escribir, ejecutar y organizar proyectos de programacion.",
+        "example": "Abrir carpeta -> crear app.py -> ejecutar en terminal.",
+    },
+]
+
+
+LESSON_GLOSSARY = {
+    0: ["Variable", "Dato", "Identificador"],
+    1: ["Variable", "Python", "VS Code"],
+    2: ["Dato", "Estructura selectiva", "Python"],
+    3: ["Estructura selectiva", "Dato", "Algoritmo"],
+    4: ["Variable", "Dato", "Python"],
+    5: ["Programa", "Variable", "Python"],
+}
+
+
 def get_lesson(index):
     return LESSONS[index % len(LESSONS)]
 
 
 def total_lessons():
     return len(LESSONS)
+
+
+def get_glossary_terms(index):
+    names = LESSON_GLOSSARY.get(index, ["Algoritmo", "Variable", "Python"])
+    terms_by_name = {item["term"]: item for item in GLOSSARY_TERMS}
+    return [terms_by_name[name] for name in names if name in terms_by_name]
 
 
 def expected_answer(lesson):
