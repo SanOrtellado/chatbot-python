@@ -207,7 +207,7 @@ if mode == "Ruta de aprendizaje":
         st.session_state[answer_key] = ""
 
     st.markdown("Ejemplo:")
-    st.code(lesson["example"], language="python")
+    st.code(lesson.get("example", lesson["starter"]), language="python")
 
     answer = st.text_area(
         lesson["prompt"],
@@ -229,7 +229,7 @@ if mode == "Ruta de aprendizaje":
             st.success(f"Leccion resuelta. +10 XP. {lesson['feedback']}")
         else:
             st.error("Todavia no. Revisa el nombre de la variable, el signo `=` o la sintaxis.")
-            st.warning(lesson["hint"])
+            st.warning(lesson.get("hint", "Revisa la sintaxis y vuelve a intentarlo."))
 
             if st.button("Corregir"):
                 st.session_state.path_answered = False
