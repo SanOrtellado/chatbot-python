@@ -66,8 +66,66 @@ def render_message(role, text):
         st.markdown(text)
 
 
-st.title("Aprendizaje de algoritmos de Python")
-st.caption("by San-Data | Proyecto creado por Sandra Ortellado")
+def render_header():
+    st.markdown(
+        """
+        <div style="padding: 0.75rem 0 1.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 1.5rem;">
+            <strong>San-Data</strong> · Aprendizaje de algoritmos de Python
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_footer():
+    st.markdown(
+        """
+        <div style="padding-top: 2rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.12); opacity: 0.75;">
+            Proyecto educativo creado por Sandra Ortellado · San-Data
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def select_mode(mode_name):
+    st.session_state.active_mode = mode_name
+    st.session_state.show_home = False
+
+
+def go_home():
+    st.session_state.show_home = True
+
+
+def render_home():
+    st.title("Aprendizaje de algoritmos de Python")
+    st.caption("by San-Data | Proyecto creado por Sandra Ortellado")
+    st.markdown("### Elegi como queres aprender")
+
+    mode_col_1, mode_col_2, mode_col_3 = st.columns(3)
+
+    with mode_col_1:
+        if st.button("Asistente de aprendizaje", use_container_width=True):
+            select_mode("Asistente de aprendizaje")
+            st.rerun()
+
+    with mode_col_2:
+        if st.button("Practica guiada", use_container_width=True):
+            select_mode("Practica guiada")
+            st.rerun()
+
+    with mode_col_3:
+        if st.button("Ruta de aprendizaje", use_container_width=True):
+            select_mode("Ruta de aprendizaje")
+            st.rerun()
+
+    st.link_button("Ver perfil San-Data", PORTFOLIO_URL, use_container_width=True)
+    st.caption(
+        "El asistente responde dudas con conceptos y codigo. La practica guiada propone desafios con feedback inmediato."
+    )
+
+
+render_header()
 
 with st.sidebar:
     st.image(AUTHOR_IMAGE_URL, caption="Sandra Ortellado | San-Data")
@@ -86,6 +144,8 @@ mode_options = ["Asistente de aprendizaje", "Practica guiada", "Ruta de aprendiz
 
 if "active_mode" not in st.session_state:
     st.session_state.active_mode = "Asistente de aprendizaje"
+if "show_home" not in st.session_state:
+    st.session_state.show_home = True
 
 mode = st.sidebar.radio(
     "Modo",
@@ -103,31 +163,17 @@ if ml_ready:
     except ModuleNotFoundError:
         ml_ready = False
 
-st.markdown("### Elegi como queres aprender")
-mode_col_1, mode_col_2, mode_col_3 = st.columns(3)
-
-with mode_col_1:
-    if st.button("Asistente de aprendizaje", use_container_width=True):
-        st.session_state.active_mode = "Asistente de aprendizaje"
-        st.rerun()
-
-with mode_col_2:
-    if st.button("Practica guiada", use_container_width=True):
-        st.session_state.active_mode = "Practica guiada"
-        st.rerun()
-
-with mode_col_3:
-    if st.button("Ruta de aprendizaje", use_container_width=True):
-        st.session_state.active_mode = "Ruta de aprendizaje"
-        st.rerun()
-
-st.link_button("Ver perfil San-Data", PORTFOLIO_URL, use_container_width=True)
-
-st.caption(
-    "El asistente responde dudas con conceptos y codigo. La practica guiada propone desafios con feedback inmediato."
-)
-
 mode = st.session_state.active_mode
+
+if not st.session_state.show_home:
+    if st.button("Volver a Home", key="top_home"):
+        go_home()
+        st.rerun()
+
+if st.session_state.show_home:
+    render_home()
+    render_footer()
+    st.stop()
 
 if mode == "Asistente de aprendizaje":
     st.info("Modo aprendizaje activo: pregunta por temas, codigo, ejercicios o temario completo.")
@@ -179,11 +225,17 @@ if mode == "Ruta de aprendizaje":
             st.error("Todavia no. Revisa el nombre de la variable, el signo `=` o la sintaxis.")
             st.code(lesson["starter"], language="python")
 
-        if st.button("Siguiente leccion"):
-            st.session_state.path_index = (st.session_state.path_index + 1) % total_lessons()
-            st.session_state.path_answered = False
-            st.session_state.path_is_correct = False
-            st.rerun()
+        col_continue, col_home = st.columns(2)
+        with col_continue:
+            if st.button("Continuar", key="path_continue"):
+                st.session_state.path_index = (st.session_state.path_index + 1) % total_lessons()
+                st.session_state.path_answered = False
+                st.session_state.path_is_correct = False
+                st.rerun()
+        with col_home:
+            if st.button("Volver a Home", key="path_home"):
+                go_home()
+                st.rerun()
 
     if st.button("Reiniciar ruta"):
         st.session_state.path_index = 0
@@ -193,6 +245,7 @@ if mode == "Ruta de aprendizaje":
         st.session_state.path_is_correct = False
         st.rerun()
 
+    render_footer()
     st.stop()
 
 if mode == "Practica guiada":
@@ -240,13 +293,19 @@ if mode == "Practica guiada":
 
         st.info(question["mini_lesson"])
 
-        if st.button("Siguiente desafio"):
-            st.session_state.practice_index = (
-                st.session_state.practice_index + 1
-            ) % total_questions()
-            st.session_state.practice_answered = False
-            st.session_state.practice_is_correct = False
-            st.rerun()
+        col_continue, col_home = st.columns(2)
+        with col_continue:
+            if st.button("Continuar", key="practice_continue"):
+                st.session_state.practice_index = (
+                    st.session_state.practice_index + 1
+                ) % total_questions()
+                st.session_state.practice_answered = False
+                st.session_state.practice_is_correct = False
+                st.rerun()
+        with col_home:
+            if st.button("Volver a Home", key="practice_home"):
+                go_home()
+                st.rerun()
 
     if st.button("Reiniciar practica"):
         st.session_state.practice_index = 0
@@ -255,6 +314,7 @@ if mode == "Practica guiada":
         st.session_state.practice_is_correct = False
         st.rerun()
 
+    render_footer()
     st.stop()
 
 message_key = "study_messages"
@@ -294,3 +354,5 @@ if prompt:
 
     st.session_state[message_key].append({"role": "assistant", "content": response})
     render_message("assistant", response)
+
+render_footer()
