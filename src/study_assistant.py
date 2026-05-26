@@ -110,6 +110,53 @@ STOPWORDS = {
 
 SPECIFIC_EXERCISES = [
     {
+        "keywords": ["precio", "final", "descuento"],
+        "title": "precio final con descuento",
+        "summary": "Para calcular el precio final se obtiene primero el descuento y luego se resta al precio original.",
+        "pseudocode": """Inicio
+    Leer precio
+    Leer porcentaje_descuento
+    descuento = precio * porcentaje_descuento / 100
+    precio_final = precio - descuento
+    Escribir precio_final
+Fin""",
+        "code": """precio = float(input("Precio original: "))
+porcentaje_descuento = float(input("Descuento (%): "))
+
+descuento = precio * porcentaje_descuento / 100
+precio_final = precio - descuento
+
+print(f"Descuento aplicado: {descuento}")
+print(f"Precio final: {precio_final}")""",
+        "exercise": "Agrega el calculo de IVA sobre el precio final con descuento.",
+    },
+    {
+        "keywords": ["subtotal", "iva", "total", "compra"],
+        "title": "subtotal, IVA y total de una compra",
+        "summary": "El subtotal se calcula multiplicando precio por cantidad. Luego se calcula el IVA y se suma para obtener el total.",
+        "pseudocode": """Inicio
+    Leer precio
+    Leer cantidad
+    subtotal = precio * cantidad
+    iva = subtotal * 0.21
+    total = subtotal + iva
+    Escribir subtotal
+    Escribir iva
+    Escribir total
+Fin""",
+        "code": """precio = float(input("Precio unitario: "))
+cantidad = int(input("Cantidad: "))
+
+subtotal = precio * cantidad
+iva = subtotal * 0.21
+total = subtotal + iva
+
+print(f"Subtotal: {subtotal}")
+print(f"IVA: {iva}")
+print(f"Total: {total}")""",
+        "exercise": "Agrega un descuento si el total supera 50000.",
+    },
+    {
         "keywords": ["area", "rectangulo"],
         "title": "area de un rectangulo",
         "summary": "Para calcular el area de un rectangulo se multiplica la base por la altura.",
@@ -146,6 +193,47 @@ promedio = (nota_1 + nota_2 + nota_3) / 3
 
 print(f"El promedio es: {promedio}")""",
         "exercise": "Agrega una condicion para mostrar si el promedio es aprobado o desaprobado.",
+    },
+    {
+        "keywords": ["promedio", "ventas", "meses"],
+        "title": "promedio de ventas de tres meses",
+        "summary": "Para calcular el promedio de ventas se suman las ventas de cada mes y se dividen por la cantidad de meses.",
+        "pseudocode": """Inicio
+    Leer venta_mes_1
+    Leer venta_mes_2
+    Leer venta_mes_3
+    promedio = (venta_mes_1 + venta_mes_2 + venta_mes_3) / 3
+    Escribir promedio
+Fin""",
+        "code": """venta_mes_1 = float(input("Venta mes 1: "))
+venta_mes_2 = float(input("Venta mes 2: "))
+venta_mes_3 = float(input("Venta mes 3: "))
+
+promedio = (venta_mes_1 + venta_mes_2 + venta_mes_3) / 3
+
+print(f"Promedio de ventas: {promedio}")""",
+        "exercise": "Agrega una condicion que indique si el promedio supera el objetivo comercial.",
+    },
+    {
+        "keywords": ["nombre", "ciudad", "frase", "aprender"],
+        "title": "presentacion personal en Python",
+        "summary": "Este programa guarda datos personales en variables y los muestra en pantalla usando `print`.",
+        "pseudocode": """Inicio
+    nombre = "Sandra"
+    ciudad = "Buenos Aires"
+    objetivo = "aprender algoritmos con Python"
+    Escribir nombre
+    Escribir ciudad
+    Escribir objetivo
+Fin""",
+        "code": """nombre = "Sandra"
+ciudad = "Buenos Aires"
+objetivo = "aprender algoritmos con Python"
+
+print(f"Mi nombre es {nombre}")
+print(f"Vivo en {ciudad}")
+print(f"Quiero {objetivo}")""",
+        "exercise": "Modifica el programa para pedir esos datos con `input`.",
     },
     {
         "keywords": ["mayor", "menor", "edad"],
