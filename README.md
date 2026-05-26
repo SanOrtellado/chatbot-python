@@ -15,6 +15,7 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - Puede funcionar como asistente de aprendizaje por temas si agregas un PDF de estudio en la carpeta del proyecto.
 - Incluye marca personal, links de portfolio y datos de la creadora.
 - Incluye un modo de practica guiada con preguntas, opciones y feedback inmediato.
+- Muestra accesos principales en el home para que funcione mejor en mobile.
 
 ## Autora
 

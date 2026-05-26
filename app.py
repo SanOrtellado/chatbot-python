@@ -82,10 +82,17 @@ with st.sidebar:
     )
     st.divider()
 
+mode_options = ["Asistente de aprendizaje", "Practica guiada"]
+
+if "active_mode" not in st.session_state:
+    st.session_state.active_mode = "Asistente de aprendizaje"
+
 mode = st.sidebar.radio(
     "Modo",
-    ["Chatbot general", "Asistente de aprendizaje", "Practica guiada"],
+    mode_options,
+    index=mode_options.index(st.session_state.active_mode),
 )
+st.session_state.active_mode = mode
 
 ml_ready = MODEL_PATH.exists()
 resources = None
@@ -96,10 +103,30 @@ if ml_ready:
     except ModuleNotFoundError:
         ml_ready = False
 
-if ml_ready and resources:
-    st.success("Modo modelo entrenado activo.")
-else:
-    st.info("Modo demo activo. Para usar la red neuronal, instala TensorFlow con Python 3.10, 3.11 o 3.12 y entrena el modelo.")
+st.markdown("### Elegi como queres aprender")
+mode_col_1, mode_col_2, mode_col_3 = st.columns(3)
+
+with mode_col_1:
+    if st.button("Asistente de aprendizaje", use_container_width=True):
+        st.session_state.active_mode = "Asistente de aprendizaje"
+        st.rerun()
+
+with mode_col_2:
+    if st.button("Practica guiada", use_container_width=True):
+        st.session_state.active_mode = "Practica guiada"
+        st.rerun()
+
+with mode_col_3:
+    st.link_button("Ver perfil San-Data", PORTFOLIO_URL, use_container_width=True)
+
+st.caption(
+    "El asistente responde dudas con conceptos y codigo. La practica guiada propone desafios con feedback inmediato."
+)
+
+mode = st.session_state.active_mode
+
+if mode == "Asistente de aprendizaje":
+    st.info("Modo aprendizaje activo: pregunta por temas, codigo, ejercicios o temario completo.")
 
 if mode == "Practica guiada":
     from guided_practice import get_question, total_questions
@@ -163,13 +190,11 @@ if mode == "Practica guiada":
 
     st.stop()
 
-message_key = "study_messages" if mode == "Asistente de aprendizaje" else "chat_messages"
+message_key = "study_messages"
 
 if message_key not in st.session_state:
     intro = (
         "Hola, soy tu asistente de aprendizaje. Preguntame por temas como bucles, listas, funciones o condicionales."
-        if mode == "Asistente de aprendizaje"
-        else "Hola, soy el chatbot de San-Data. Preguntame sobre Python, IA, este proyecto o Sandra Ortellado."
     )
     st.session_state[message_key] = [
         {
@@ -197,10 +222,6 @@ if prompt:
         from study_assistant import build_study_response
 
         response = build_study_response(prompt, PDF_PATH)
-    elif ml_ready and resources:
-        intents, words, classes, model, get_response, predict_class = resources
-        predicted = predict_class(prompt, model, words, classes)
-        response = get_response(predicted, intents)
     else:
         response = demo_response(prompt, load_demo_intents())
 
