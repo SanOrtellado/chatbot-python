@@ -82,7 +82,7 @@ with st.sidebar:
     )
     st.divider()
 
-mode_options = ["Asistente de aprendizaje", "Practica guiada"]
+mode_options = ["Asistente de aprendizaje", "Practica guiada", "Ruta de aprendizaje"]
 
 if "active_mode" not in st.session_state:
     st.session_state.active_mode = "Asistente de aprendizaje"
@@ -117,7 +117,11 @@ with mode_col_2:
         st.rerun()
 
 with mode_col_3:
-    st.link_button("Ver perfil San-Data", PORTFOLIO_URL, use_container_width=True)
+    if st.button("Ruta de aprendizaje", use_container_width=True):
+        st.session_state.active_mode = "Ruta de aprendizaje"
+        st.rerun()
+
+st.link_button("Ver perfil San-Data", PORTFOLIO_URL, use_container_width=True)
 
 st.caption(
     "El asistente responde dudas con conceptos y codigo. La practica guiada propone desafios con feedback inmediato."
@@ -127,6 +131,69 @@ mode = st.session_state.active_mode
 
 if mode == "Asistente de aprendizaje":
     st.info("Modo aprendizaje activo: pregunta por temas, codigo, ejercicios o temario completo.")
+
+if mode == "Ruta de aprendizaje":
+    from learning_path import get_lesson, total_lessons, validate_answer
+
+    if "path_index" not in st.session_state:
+        st.session_state.path_index = 0
+    if "path_xp" not in st.session_state:
+        st.session_state.path_xp = 0
+    if "path_streak" not in st.session_state:
+        st.session_state.path_streak = 1
+    if "path_answered" not in st.session_state:
+        st.session_state.path_answered = False
+
+    lesson = get_lesson(st.session_state.path_index)
+    progress = (st.session_state.path_index + 1) / total_lessons()
+
+    st.subheader(f"Seccion: {lesson['section']}")
+    st.caption(f"Racha diaria: {st.session_state.path_streak} dia | XP: {st.session_state.path_xp}/100")
+    st.progress(progress)
+
+    st.markdown(f"### {st.session_state.path_index + 1:02d}. {lesson['title']}")
+    st.write(lesson["goal"])
+    st.info(lesson["lesson"])
+
+    st.markdown("#### script.py")
+    answer = st.text_area(
+        lesson["prompt"],
+        value=lesson["starter"] if st.session_state.path_answered else "",
+        height=120,
+        key=f"path_answer_{st.session_state.path_index}",
+        disabled=st.session_state.path_answered,
+    )
+
+    if st.button("Comprobar", disabled=st.session_state.path_answered):
+        is_correct = validate_answer(lesson, answer)
+        st.session_state.path_answered = True
+        st.session_state.path_is_correct = is_correct
+        if is_correct:
+            st.session_state.path_xp += 10
+        st.rerun()
+
+    if st.session_state.path_answered:
+        if st.session_state.path_is_correct:
+            st.success(f"Leccion resuelta. +10 XP. {lesson['feedback']}")
+        else:
+            st.error("Todavia no. Revisa el nombre de la variable, el signo `=` o la sintaxis.")
+            st.code(lesson["starter"], language="python")
+
+        if st.button("Siguiente leccion"):
+            st.session_state.path_index = (st.session_state.path_index + 1) % total_lessons()
+            st.session_state.path_answered = False
+            st.session_state.path_is_correct = False
+            st.rerun()
+
+    if st.button("Reiniciar ruta"):
+        st.session_state.path_index = 0
+        st.session_state.path_xp = 0
+        st.session_state.path_streak = 1
+        st.session_state.path_answered = False
+        st.session_state.path_is_correct = False
+        st.rerun()
+
+    st.stop()
 
 if mode == "Practica guiada":
     from guided_practice import get_question, total_questions

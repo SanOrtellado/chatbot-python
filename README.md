@@ -16,6 +16,7 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - Incluye marca personal, links de portfolio y datos de la creadora.
 - Incluye un modo de practica guiada con preguntas, opciones y feedback inmediato.
 - Muestra accesos principales en el home para que funcione mejor en mobile.
+- Incluye una ruta de aprendizaje con lecciones, editor `script.py`, XP y racha diaria.
 
 ## Autora
 
