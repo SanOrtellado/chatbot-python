@@ -202,11 +202,17 @@ if mode == "Ruta de aprendizaje":
     st.info(lesson["lesson"])
 
     st.markdown("#### script.py")
+    answer_key = f"path_answer_{st.session_state.path_index}"
+    if answer_key not in st.session_state:
+        st.session_state[answer_key] = ""
+
+    st.markdown("Ejemplo:")
+    st.code(lesson["example"], language="python")
+
     answer = st.text_area(
         lesson["prompt"],
-        value=lesson["starter"] if st.session_state.path_answered else "",
         height=120,
-        key=f"path_answer_{st.session_state.path_index}",
+        key=answer_key,
         disabled=st.session_state.path_answered,
     )
 
@@ -223,7 +229,13 @@ if mode == "Ruta de aprendizaje":
             st.success(f"Leccion resuelta. +10 XP. {lesson['feedback']}")
         else:
             st.error("Todavia no. Revisa el nombre de la variable, el signo `=` o la sintaxis.")
-            st.code(lesson["starter"], language="python")
+            st.warning(lesson["hint"])
+
+            if st.button("Corregir"):
+                st.session_state.path_answered = False
+                st.session_state.path_is_correct = False
+                st.session_state[answer_key] = ""
+                st.rerun()
 
         col_continue, col_home = st.columns(2)
         with col_continue:
