@@ -249,7 +249,7 @@ if mode == "Ruta de aprendizaje":
     st.stop()
 
 if mode == "Practica guiada":
-    from guided_practice import get_question, total_questions
+    from guided_practice import get_question, is_complete, total_questions
 
     if "practice_index" not in st.session_state:
         st.session_state.practice_index = 0
@@ -257,6 +257,26 @@ if mode == "Practica guiada":
         st.session_state.practice_answered = False
     if "practice_score" not in st.session_state:
         st.session_state.practice_score = 0
+
+    if is_complete(st.session_state.practice_index):
+        st.subheader("Practica completa")
+        st.success(
+            f"Terminaste todas las preguntas. Puntaje final: {st.session_state.practice_score}/{total_questions()}."
+        )
+        col_restart, col_home = st.columns(2)
+        with col_restart:
+            if st.button("Practicar de nuevo"):
+                st.session_state.practice_index = 0
+                st.session_state.practice_answered = False
+                st.session_state.practice_score = 0
+                st.session_state.practice_is_correct = False
+                st.rerun()
+        with col_home:
+            if st.button("Volver a Home", key="practice_complete_home"):
+                go_home()
+                st.rerun()
+        render_footer()
+        st.stop()
 
     question = get_question(st.session_state.practice_index)
     progress = (st.session_state.practice_index + 1) / total_questions()
@@ -296,9 +316,7 @@ if mode == "Practica guiada":
         col_continue, col_home = st.columns(2)
         with col_continue:
             if st.button("Continuar", key="practice_continue"):
-                st.session_state.practice_index = (
-                    st.session_state.practice_index + 1
-                ) % total_questions()
+                st.session_state.practice_index = st.session_state.practice_index + 1
                 st.session_state.practice_answered = False
                 st.session_state.practice_is_correct = False
                 st.rerun()

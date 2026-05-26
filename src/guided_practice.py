@@ -65,12 +65,74 @@ QUESTIONS = [
         "feedback_bad": "Los comentarios documentan codigo y los operadores comparan. Para varios valores, usa una lista.",
         "mini_lesson": "Ejemplo: `productos = [\"notebook\", \"mouse\", \"teclado\"]`.",
     },
+    {
+        "topic": "Operadores aritmeticos",
+        "question": "Que operador se usa para obtener el resto de una division?",
+        "options": ["%", "/", "**"],
+        "answer": 0,
+        "feedback_ok": "Correcto. `%` devuelve el resto de una division.",
+        "feedback_bad": "`/` divide y `**` calcula potencia. Para el resto se usa `%`.",
+        "mini_lesson": "Ejemplo: `10 % 3` devuelve `1`.",
+    },
+    {
+        "topic": "Operadores relacionales",
+        "question": "Que devuelve una comparacion como `edad >= 18`?",
+        "options": ["True o False", "Una lista", "Un texto obligatorio"],
+        "answer": 0,
+        "feedback_ok": "Correcto. Las comparaciones devuelven valores booleanos.",
+        "feedback_bad": "Una comparacion evalua una condicion y devuelve `True` o `False`.",
+        "mini_lesson": "Ejemplo: `20 >= 18` devuelve `True`.",
+    },
+    {
+        "topic": "Operadores logicos",
+        "question": "Que operador exige que dos condiciones sean verdaderas?",
+        "options": ["and", "or", "not"],
+        "answer": 0,
+        "feedback_ok": "Correcto. `and` requiere que ambas condiciones se cumplan.",
+        "feedback_bad": "`or` acepta una condicion verdadera y `not` invierte el resultado. Para ambas, usa `and`.",
+        "mini_lesson": "Ejemplo: `edad >= 18 and saldo > 0`.",
+    },
+    {
+        "topic": "While",
+        "question": "Cuando conviene usar un bucle while?",
+        "options": [
+            "Cuando quiero repetir mientras una condicion sea verdadera.",
+            "Cuando quiero mostrar un texto una sola vez.",
+            "Cuando quiero crear una variable de texto.",
+        ],
+        "answer": 0,
+        "feedback_ok": "Correcto. `while` repite mientras la condicion sea verdadera.",
+        "feedback_bad": "`while` no es para mostrar una sola vez ni para crear variables: es para repetir con condicion.",
+        "mini_lesson": "Ejemplo: `while contador <= 5:`.",
+    },
+    {
+        "topic": "Vectores",
+        "question": "Como representamos normalmente un vector en Python?",
+        "options": ["Con una lista", "Con un print", "Con un if"],
+        "answer": 0,
+        "feedback_ok": "Correcto. En Python un vector puede representarse con una lista.",
+        "feedback_bad": "`print` muestra y `if` decide. Para varios valores en una dimension, usa una lista.",
+        "mini_lesson": "Ejemplo: `ventas = [1200, 1500, 1800]`.",
+    },
+    {
+        "topic": "Matrices",
+        "question": "Como se puede representar una matriz en Python?",
+        "options": ["Como una lista de listas", "Como una sola cadena", "Solo con input"],
+        "answer": 0,
+        "feedback_ok": "Correcto. Una matriz puede ser una lista que contiene otras listas.",
+        "feedback_bad": "Una cadena guarda texto e `input` lee datos. Una matriz se puede representar como lista de listas.",
+        "mini_lesson": "Ejemplo: `matriz = [[1, 2], [3, 4]]`.",
+    },
 ]
 
 
 def get_question(index):
-    return QUESTIONS[index % len(QUESTIONS)]
+    return QUESTIONS[index]
 
 
 def total_questions():
     return len(QUESTIONS)
+
+
+def is_complete(index):
+    return index >= total_questions()
