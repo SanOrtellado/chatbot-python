@@ -84,7 +84,7 @@ with st.sidebar:
 
 mode = st.sidebar.radio(
     "Modo",
-    ["Chatbot general", "Asistente de aprendizaje"],
+    ["Chatbot general", "Asistente de aprendizaje", "Practica guiada"],
 )
 
 ml_ready = MODEL_PATH.exists()
@@ -100,6 +100,68 @@ if ml_ready and resources:
     st.success("Modo modelo entrenado activo.")
 else:
     st.info("Modo demo activo. Para usar la red neuronal, instala TensorFlow con Python 3.10, 3.11 o 3.12 y entrena el modelo.")
+
+if mode == "Practica guiada":
+    from guided_practice import get_question, total_questions
+
+    if "practice_index" not in st.session_state:
+        st.session_state.practice_index = 0
+    if "practice_answered" not in st.session_state:
+        st.session_state.practice_answered = False
+    if "practice_score" not in st.session_state:
+        st.session_state.practice_score = 0
+
+    question = get_question(st.session_state.practice_index)
+    progress = (st.session_state.practice_index + 1) / total_questions()
+
+    st.subheader(f"Practica guiada: {question['topic']}")
+    st.progress(progress)
+    st.caption(
+        f"Pregunta {st.session_state.practice_index + 1} de {total_questions()} | "
+        f"Puntaje: {st.session_state.practice_score}"
+    )
+
+    st.markdown(f"### {question['question']}")
+
+    selected_option = st.radio(
+        "Elegi una respuesta",
+        question["options"],
+        key=f"practice_option_{st.session_state.practice_index}",
+        disabled=st.session_state.practice_answered,
+    )
+
+    if st.button("Responder", disabled=st.session_state.practice_answered):
+        selected_index = question["options"].index(selected_option)
+        st.session_state.practice_answered = True
+        st.session_state.practice_is_correct = selected_index == question["answer"]
+        if st.session_state.practice_is_correct:
+            st.session_state.practice_score += 1
+        st.rerun()
+
+    if st.session_state.practice_answered:
+        if st.session_state.practice_is_correct:
+            st.success(question["feedback_ok"])
+        else:
+            st.error(question["feedback_bad"])
+
+        st.info(question["mini_lesson"])
+
+        if st.button("Siguiente desafio"):
+            st.session_state.practice_index = (
+                st.session_state.practice_index + 1
+            ) % total_questions()
+            st.session_state.practice_answered = False
+            st.session_state.practice_is_correct = False
+            st.rerun()
+
+    if st.button("Reiniciar practica"):
+        st.session_state.practice_index = 0
+        st.session_state.practice_answered = False
+        st.session_state.practice_score = 0
+        st.session_state.practice_is_correct = False
+        st.rerun()
+
+    st.stop()
 
 message_key = "study_messages" if mode == "Asistente de aprendizaje" else "chat_messages"
 
