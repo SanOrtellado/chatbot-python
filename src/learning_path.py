@@ -7,12 +7,12 @@ LESSONS = [
         "section": "Introduccion a Python",
         "goal": "Crea variables que almacenen texto y numeros.",
         "lesson": "Una variable guarda un valor para usarlo despues. En Python se crea con un nombre, el signo `=` y un valor.",
-        "prompt": "Crea una variable llamada `home_city` con el valor `Buenos Aires`.",
+        "prompt": "Ahora crea una variable diferente llamada `favorite_language` con el valor `Python`.",
         "example": 'user_name = "Sandra"',
-        "hint": 'Recorda usar comillas para los textos: `home_city = "Buenos Aires"`.',
-        "starter": 'home_city = "Buenos Aires"',
-        "validator": "home_city",
-        "feedback": "Excelente. Usaste snake_case y guardaste texto en una variable.",
+        "hint": 'Recorda usar snake_case y comillas para textos: `favorite_language = "Python"`.',
+        "starter": 'favorite_language = "Python"',
+        "validator": "favorite_language",
+        "feedback": "Excelente. Creaste una variable nueva usando snake_case y guardaste texto.",
     },
     {
         "title": "Uso de variables",
@@ -96,8 +96,8 @@ def normalize_code(code):
 def validate_answer(lesson, answer):
     normalized = normalize_code(answer)
 
-    if lesson["validator"] == "home_city":
-        return "home_city=" in normalized and ("buenosaires" in normalized or '"buenosaires"' in normalized)
+    if lesson["validator"] == "favorite_language":
+        return "favorite_language=" in normalized and "python" in normalized
 
     if lesson["validator"] == "print_home_city":
         return normalized in {"print(home_city)", "print( home_city )"}
