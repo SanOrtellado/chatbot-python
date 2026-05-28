@@ -18,6 +18,39 @@ CONTENT_INDEX = [
     "Estructuras selectivas",
     "Estructuras repetitivas: for, while y repetir",
     "Vectores y matrices",
+    "Cadenas de texto",
+    "Funciones",
+    "Diccionarios",
+    "Archivos",
+    "Errores y excepciones",
+]
+
+
+SOURCE_CATALOG = [
+    {
+        "title": "Algoritmos resueltos con Python",
+        "type": "PDF del proyecto",
+        "license": "Recurso autorizado por la creadora del proyecto",
+        "url": "Algoritmos-resueltos-con-Python.pdf",
+    },
+    {
+        "title": "Python para todos",
+        "type": "Libro abierto",
+        "license": "Creative Commons Attribution 3.0",
+        "url": "https://es.py4e.com/book",
+    },
+    {
+        "title": "Introduccion a la programacion con Python 3",
+        "type": "Libro universitario abierto",
+        "license": "Creative Commons BY-SA",
+        "url": "https://repositori.uji.es/items/992c7ee2-fef4-4061-9958-aefe932fd611",
+    },
+    {
+        "title": "Recursos educativos abiertos de Python",
+        "type": "Material educativo",
+        "license": "Creative Commons BY-SA 4.0",
+        "url": "https://procomun.intef.es/ode/view/es_2023110612_9213526",
+    },
 ]
 
 
@@ -71,6 +104,31 @@ PRACTICE_VARIANTS = {
         "Crea una matriz de 2 filas por 3 columnas y muestra todos sus elementos con bucles anidados.",
         "Crea una matriz con ventas por sucursal y mes, luego muestra la primera fila.",
         "Calcula el total por fila de una matriz de ventas.",
+    ],
+    "funciones": [
+        "Crea una funcion que reciba un nombre y devuelva un saludo.",
+        "Crea una funcion que calcule el total de una compra con precio y cantidad.",
+        "Crea una funcion reutilizable para calcular subtotal, descuento, IVA y total final.",
+    ],
+    "cadenas": [
+        "Guarda tu nombre en una variable y muestra un saludo usando una f-string.",
+        "Crea una frase con producto, precio y ciudad usando variables.",
+        "Normaliza un texto: quita espacios al inicio/final y pasalo a minusculas.",
+    ],
+    "diccionarios": [
+        "Crea un diccionario con los datos de un producto: nombre, precio y stock.",
+        "Recorre un diccionario de ventas por canal y muestra cada total.",
+        "Crea una lista de diccionarios de productos y calcula el valor total del inventario.",
+    ],
+    "archivos": [
+        "Escribe tres lineas en un archivo de texto y luego leelas desde Python.",
+        "Guarda una lista de tareas en un archivo `.txt`.",
+        "Lee un archivo de ventas, convierte los valores a numero y calcula el total.",
+    ],
+    "errores": [
+        "Usa `try` y `except` para validar que el usuario ingrese un numero.",
+        "Controla una division por cero con un mensaje claro para el usuario.",
+        "Crea un programa que siga pidiendo un precio hasta que el dato sea valido.",
     ],
 }
 
@@ -474,6 +532,59 @@ print(total)""",
 print(matriz[0][1])""",
         "exercise": "Crea una matriz de 2 filas por 3 columnas y muestra todos sus elementos con bucles anidados.",
     },
+    "cadenas": {
+        "keywords": ["cadena", "cadenas", "texto", "string", "strings", "f-string", "formato"],
+        "summary": "Las cadenas guardan texto. En Python se escriben entre comillas y pueden combinarse con variables usando f-strings.",
+        "code": """nombre = "Sandra"
+curso = "Python"
+
+print(f"{nombre} esta aprendiendo {curso}")""",
+        "exercise": "Guarda tu nombre en una variable y muestra un saludo usando una f-string.",
+    },
+    "funciones": {
+        "keywords": ["funcion", "funciones", "def", "parametro", "parametros", "return", "retornar"],
+        "summary": "Una funcion agrupa instrucciones para reutilizarlas. Puede recibir parametros y devolver un resultado con `return`.",
+        "code": """def calcular_total(precio, cantidad):
+    return precio * cantidad
+
+total = calcular_total(1500, 3)
+print(total)""",
+        "exercise": "Crea una funcion que reciba un nombre y devuelva un saludo.",
+    },
+    "diccionarios": {
+        "keywords": ["diccionario", "diccionarios", "dict", "clave", "valor", "keys", "values"],
+        "summary": "Un diccionario guarda datos como pares clave-valor. Sirve para representar objetos con atributos.",
+        "code": """producto = {
+    "nombre": "Notebook",
+    "precio": 850000,
+    "stock": 5,
+}
+
+print(producto["precio"])""",
+        "exercise": "Crea un diccionario con los datos de un producto: nombre, precio y stock.",
+    },
+    "archivos": {
+        "keywords": ["archivo", "archivos", "leer archivo", "escribir archivo", "open", "txt", "csv"],
+        "summary": "Python puede leer y escribir archivos para guardar informacion o procesar datos externos.",
+        "code": """with open("notas.txt", "w", encoding="utf-8") as archivo:
+    archivo.write("Aprendiendo Python\\n")
+
+with open("notas.txt", "r", encoding="utf-8") as archivo:
+    contenido = archivo.read()
+
+print(contenido)""",
+        "exercise": "Escribe tres lineas en un archivo de texto y luego leelas desde Python.",
+    },
+    "errores": {
+        "keywords": ["error", "errores", "excepcion", "excepciones", "try", "except", "validar"],
+        "summary": "Las excepciones permiten manejar errores sin que el programa se detenga de forma brusca.",
+        "code": """try:
+    numero = int(input("Ingresa un numero: "))
+    print(numero * 2)
+except ValueError:
+    print("Tenes que ingresar un numero valido")""",
+        "exercise": "Usa `try` y `except` para validar que el usuario ingrese un numero.",
+    },
 }
 
 
@@ -628,7 +739,22 @@ def build_index_response():
     )
 
 
+def build_sources_response():
+    items = "\n".join(
+        f"- **{source['title']}** ({source['type']}): {source['license']}"
+        for source in SOURCE_CATALOG
+    )
+    return (
+        "**Fuentes de aprendizaje integradas**\n\n"
+        f"{items}\n\n"
+        "Uso estas referencias para organizar temas, conceptos y ejercicios, pero las respuestas se generan como explicaciones propias."
+    )
+
+
 def build_study_response(question, pdf_path=None):
+    if any(trigger in normalize_text(question) for trigger in ["fuentes", "bibliografia", "libros", "recursos"]):
+        return build_sources_response()
+
     if asks_for_index(question):
         return build_index_response()
 

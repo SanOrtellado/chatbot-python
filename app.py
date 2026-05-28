@@ -16,6 +16,12 @@ AUTHOR_IMAGE_URL = "https://san-data.vercel.app/mailoyyo.jpeg"
 PORTFOLIO_URL = "https://san-data.vercel.app/portfolio.html"
 LINKEDIN_URL = "https://ar.linkedin.com/in/sandra-ortellado"
 GITHUB_URL = "https://github.com/SanOrtellado"
+LEARNING_SOURCES = [
+    ("Algoritmos resueltos con Python", "Recurso base del proyecto"),
+    ("Python para todos", "Creative Commons Attribution 3.0"),
+    ("Introduccion a la programacion con Python 3", "Creative Commons BY-SA"),
+    ("Recursos educativos abiertos de Python", "Creative Commons BY-SA 4.0"),
+]
 sys.path.append(str(SRC_DIR))
 
 
@@ -124,6 +130,11 @@ def render_home():
         "El asistente responde dudas con conceptos y codigo. La practica guiada propone desafios con feedback inmediato."
     )
 
+    with st.expander("Fuentes de aprendizaje"):
+        st.write("La base educativa combina material propio del proyecto con recursos abiertos de Python.")
+        for title, license_text in LEARNING_SOURCES:
+            st.markdown(f"- **{title}**: {license_text}")
+
 
 render_header()
 
@@ -138,6 +149,10 @@ with st.sidebar:
     st.markdown(
         f"[Portfolio]({PORTFOLIO_URL}) | [LinkedIn]({LINKEDIN_URL}) | [GitHub]({GITHUB_URL})"
     )
+    st.divider()
+    st.markdown("### Fuentes")
+    for title, license_text in LEARNING_SOURCES:
+        st.caption(f"{title} | {license_text}")
     st.divider()
 
 mode_options = ["Asistente de aprendizaje", "Practica guiada", "Ruta de aprendizaje"]

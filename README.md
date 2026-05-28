@@ -17,6 +17,7 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - Incluye un modo de practica guiada con preguntas, opciones y feedback inmediato.
 - Muestra accesos principales en el home para que funcione mejor en mobile.
 - Incluye una ruta de aprendizaje con lecciones, editor `script.py`, XP y racha diaria.
+- Integra una base educativa curada con temario, glosario, ejercicios y fuentes abiertas de Python.
 
 ## Autora
 
@@ -34,6 +35,15 @@ Sandra Ortellado es Analista de Datos, Lic. en Data Science en formacion y espec
 - NumPy
 - Streamlit
 - pypdf
+
+## Fuentes de aprendizaje
+
+La app organiza los contenidos a partir de material propio del proyecto y recursos abiertos de Python. Las respuestas del asistente se generan como explicaciones educativas propias, con ejemplos y ejercicios, evitando copiar textos largos de las fuentes.
+
+- `Algoritmos-resueltos-con-Python.pdf`: recurso base del proyecto.
+- Python para todos, Charles Severance: https://es.py4e.com/book
+- Introduccion a la programacion con Python 3: https://repositori.uji.es/items/992c7ee2-fef4-4061-9958-aefe932fd611
+- Recursos educativos abiertos de Python: https://procomun.intef.es/ode/view/es_2023110612_9213526
 
 ## Version recomendada de Python
 
@@ -119,7 +129,10 @@ En ese modo podes preguntar por temas como:
 - Dame un ejercicio sobre bucles.
 - Que son las funciones?
 - Como funcionan los condicionales?
+- Como leo un archivo en Python?
+- Que es un diccionario?
 - Mostrame el temario completo.
+- Que fuentes usa el asistente?
 
 La app devuelve una explicacion breve, un ejemplo con codigo Python y un ejercicio practico.
 
