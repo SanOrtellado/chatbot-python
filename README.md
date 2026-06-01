@@ -1,6 +1,6 @@
 # Aprendizaje de algoritmos de Python by San-Data
 
-Proyecto educativo creado por Sandra Ortellado, tambien conocida como San-Data. La app funciona como chatbot y asistente de aprendizaje para practicar temas de algoritmos y Python.
+Proyecto educativo creado por Sandra Ortellado, tambien conocida como San-Data. La app presenta a Codey, el agente de aprendizaje de San-Data que ensena algoritmos y Python con explicaciones, practica guiada y una ruta de aprendizaje.
 
 El objetivo es aprender el flujo basico de un chatbot basado en machine learning: preparar texto, convertirlo en datos numericos, entrenar un modelo y usarlo en una conversacion por consola o desde una interfaz web.
 
@@ -18,6 +18,7 @@ El objetivo es aprender el flujo basico de un chatbot basado en machine learning
 - Muestra accesos principales en el home para que funcione mejor en mobile.
 - Incluye una ruta de aprendizaje con lecciones, editor `script.py`, XP y racha diaria.
 - Integra una base educativa curada con temario, glosario, ejercicios y fuentes abiertas de Python.
+- Usa a Codey como agente visual del proyecto en lugar de una foto personal.
 
 ## Autora
 
@@ -56,6 +57,7 @@ chatbot-python/
 |-- app.py
 |-- Algoritmos-resueltos-con-Python.pdf
 |-- assets/
+|   |-- codey.svg
 |   `-- linkedin_post.md
 |-- data/
 |   `-- intents.json

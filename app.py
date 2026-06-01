@@ -12,7 +12,8 @@ SRC_DIR = BASE_DIR / "src"
 DATA_PATH = BASE_DIR / "data" / "intents.json"
 MODEL_PATH = BASE_DIR / "model" / "chatbot_model.keras"
 PDF_PATH = BASE_DIR / "Algoritmos-resueltos-con-Python.pdf"
-AUTHOR_IMAGE_URL = "https://san-data.vercel.app/mailoyyo.jpeg"
+CODEY_IMAGE_URL = "https://e-cademy.com.ar/img/Logo%20Cursos/Codey%21%21.png"
+CODEY_FALLBACK_IMAGE_PATH = BASE_DIR / "assets" / "codey.svg"
 PORTFOLIO_URL = "https://san-data.vercel.app/portfolio.html"
 LINKEDIN_URL = "https://ar.linkedin.com/in/sandra-ortellado"
 GITHUB_URL = "https://github.com/SanOrtellado"
@@ -72,11 +73,15 @@ def render_message(role, text):
         st.markdown(text)
 
 
+def codey_image():
+    return CODEY_IMAGE_URL or str(CODEY_FALLBACK_IMAGE_PATH)
+
+
 def render_header():
     st.markdown(
         """
         <div style="padding: 0.75rem 0 1.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 1.5rem;">
-            <strong>San-Data</strong> · Aprendizaje de algoritmos de Python
+            <strong>Codey</strong> | Agente de aprendizaje Python by San-Data
         </div>
         """,
         unsafe_allow_html=True,
@@ -87,7 +92,7 @@ def render_footer():
     st.markdown(
         """
         <div style="padding-top: 2rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.12); opacity: 0.75;">
-            Proyecto educativo creado por Sandra Ortellado · San-Data
+            Codey es el agente educativo de San-Data | Proyecto creado por Sandra Ortellado
         </div>
         """,
         unsafe_allow_html=True,
@@ -105,7 +110,11 @@ def go_home():
 
 def render_home():
     st.title("Aprendizaje de algoritmos de Python")
-    st.caption("by San-Data | Proyecto creado por Sandra Ortellado")
+    st.caption("Codey, agente de San-Data | Proyecto creado por Sandra Ortellado")
+    st.image(codey_image(), width=220)
+    st.info(
+        "Codey te acompana para aprender Python paso a paso: conceptos, ejemplos, ejercicios y practica guiada."
+    )
     st.markdown("### Elegi como queres aprender")
 
     mode_col_1, mode_col_2, mode_col_3 = st.columns(3)
@@ -139,7 +148,12 @@ def render_home():
 render_header()
 
 with st.sidebar:
-    st.image(AUTHOR_IMAGE_URL, caption="Sandra Ortellado | San-Data")
+    st.image(codey_image(), caption="Codey | Agente de San-Data")
+    st.markdown("### Codey ensena Python")
+    st.markdown(
+        "Codey es el agente educativo de San-Data: ayuda a aprender algoritmos, "
+        "resolver ejercicios y practicar codigo en Python."
+    )
     st.markdown("### Creado por Sandra Ortellado")
     st.markdown(
         "Analista de Datos, Lic. en Data Science en formacion y especialista en "
@@ -371,7 +385,7 @@ message_key = "study_messages"
 
 if message_key not in st.session_state:
     intro = (
-        "Hola, soy tu asistente de aprendizaje. Preguntame por temas como bucles, listas, funciones o condicionales."
+        "Hola, soy Codey, tu agente de aprendizaje de San-Data. Preguntame por temas como bucles, listas, funciones o condicionales."
     )
     st.session_state[message_key] = [
         {
