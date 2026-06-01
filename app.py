@@ -12,8 +12,7 @@ SRC_DIR = BASE_DIR / "src"
 DATA_PATH = BASE_DIR / "data" / "intents.json"
 MODEL_PATH = BASE_DIR / "model" / "chatbot_model.keras"
 PDF_PATH = BASE_DIR / "Algoritmos-resueltos-con-Python.pdf"
-CODEY_IMAGE_URL = "https://e-cademy.com.ar/img/Logo%20Cursos/Codey%21%21.png"
-CODEY_FALLBACK_IMAGE_PATH = BASE_DIR / "assets" / "codey.svg"
+CODEY_IMAGE_PATH = BASE_DIR / "assets" / "codey.svg"
 PORTFOLIO_URL = "https://san-data.vercel.app/portfolio.html"
 LINKEDIN_URL = "https://ar.linkedin.com/in/sandra-ortellado"
 GITHUB_URL = "https://github.com/SanOrtellado"
@@ -74,7 +73,7 @@ def render_message(role, text):
 
 
 def codey_image():
-    return CODEY_IMAGE_URL or str(CODEY_FALLBACK_IMAGE_PATH)
+    return str(CODEY_IMAGE_PATH)
 
 
 def render_header():
